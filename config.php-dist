@@ -1,0 +1,78 @@
+<?php
+
+/******************************************************************************/
+/*                                                                            */
+/* Pix : Hébergement d'images                                                 */
+/*                                                                            */
+/******************************************************************************/
+/*                                                                            */
+/* Auteur:                                                                    */
+/*     - Mickael BLATIERE (mickael@saezlive.net)                              */
+/*                                                                            */
+/* Contributeurs :                                                            */
+/*     - ZeR0^ (zero@toile-libre.org)                                         */
+/*     - NiZoX (nizox@alterinet.org)                                          */
+/*                                                                            */
+/* Licence : GPL                                                              */
+/*                                                                            */
+/******************************************************************************/
+
+
+$config = array(
+    'sql_host' => 'localhost',
+    'sql_user' => 'root',
+    'sql_password' => '',
+    'sql_database' => 'toile-pix',
+
+    'file_size_max' => 5000, // ko
+    'width' => 480,
+    'height' => 360,
+    'width_thumb' => 150,
+    'height_thumb' => 150,
+    'allowed_extensions' => array('.png', '.gif', '.jpg', '.jpeg', '.bmp'),
+
+    'dir_original' => 'upload/original/',
+    'dir_resize' => 'upload/img/',
+    'dir_thumb' => 'upload/thumb/',
+
+    'title' => 'Toile Libre',
+    'url' => 'http://localhost/pix/',
+    'style' => 'toile-libre',
+    'favicon' => 'toile-libre',
+    'cookie' => 'toile-pix',
+    'footer' => 'Service propos&eacute; et propuls&eacute; par l\'association <a href="http://www.toile-libre.org">Toile Libre</a>',
+    'cron' => 300, // seconds
+
+    /*  en %.
+        * pour [40-100[ : taille 7
+        * pour [30-40[  : taille 6
+        * pour [20-30[  : taille 5
+        * pour [15-20[  : taille 4
+        * pour [10-15[  : taille 3, couleur jaune
+        * pour [6-10[   : taille 3, couleur verte
+        * pour [3-6[    : taille 3, couleur bleue
+        * pour [1-3[    : taille 3, couleur rouge
+        * pour [0-1[    : taille 3, couleur noire
+    */
+    'tagcloud' => array(
+        0 => array('color' => "#444", 'size' => "12"),
+        1 => array('color' => "#3A3A3A", 'size' => "13"),
+        2 => array('color' => "#333", 'size' => "14"),
+        3 => array('color' => "#2A2A2A", 'size' => "15"),
+        4 => array('color' => "#222", 'size' => "16"),
+        5 => array('color' => "#1A1A1A", 'size' => "17"),
+        6 => array('color' => "#111", 'size' => "18"),
+        7 => array('color' => "#0A0A0A", 'size' => "19"),
+        8 => array('color' => "#000", 'size' => "20")
+    )
+
+);
+
+define('ROOT', dirname(__FILE__) . '/');
+define('CLASSES', ROOT . 'classes/');
+define('INC', ROOT . 'inc/');
+
+define('ORIGINAL', ROOT . $config['dir_original']);
+define('RESIZE', ROOT . $config['dir_resize']);
+define('THUMB', ROOT . $config['dir_thumb']);
+

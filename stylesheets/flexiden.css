@@ -1,0 +1,321 @@
+* {
+    margin: 0;
+    auto: 0px;
+}
+
+body {
+    font-family: "Trebuchet MS",Verdana,Sans-Serif;
+    font-size: 12px;
+    background: #161613;
+    color: #EEE;
+}
+
+a {
+    color: #8AD459;
+    text-decoration: none;
+}
+
+.content a:hover {
+    border-bottom: 1px dotted #8AD459;
+}
+
+#prelude {
+    color: #1A1A1A;
+    padding: 10px;
+    text-align: right;
+    background: #C0DB5A;
+}
+
+#prelude .actions a {
+    padding: 2px;
+    color: #1A1A1A;
+    text-decoration: none;
+    padding: 10px;
+}
+
+#prelude .actions a:hover {
+    background: #363633;
+    color: #EEE;
+    text-decoration: none;
+}
+
+#prelude .actions,
+#header,
+.content,
+#footer {
+    width: 840px;
+    margin: auto;
+}
+
+#header h1 {
+    color: #EEE;
+}
+
+h2 {
+    color: #C0DB5A;
+    text-transform: uppercase;
+}
+
+#header .logo {
+    float: left;
+    text-decoration: none;
+    margin-top: 25px;
+    width: 380px;
+    text-align: right;
+}
+
+#header .upload {
+    background: #000;
+    margin-top: 20px;
+    margin-left: 400px;
+    width: 410px;
+    padding: 15px;
+    border-left: 5px solid #0D0D09;
+    color: #EEE;
+}
+
+#header .upload h3 {
+    float: left;
+    padding-bottom: 10px;
+}
+
+#header .upload .more {
+    margin-top: 10px;
+}
+
+#header .upload .more a,
+#header .upload .help {
+    font-size: 11px;
+    text-decoration: none;
+    color: #8D8D73;
+}
+
+#header .upload .help {
+    margin-left: 10px;
+    padding-top: 2px;
+    display: block;
+    float: right;
+}
+
+#header .upload .options label,
+.content label {
+    display: block;
+    padding-top: 10px;
+}
+
+.content input[type="submit"] {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type=text],
+input[type=password],
+textarea{
+    width: 400px;
+}
+
+#header .upload input[type=text],
+#header .upload textarea {
+    width: 250px;
+}
+
+
+#footer {
+    clear: both;
+    color: #8D8D73;
+    text-align: right;
+    font-size: 11px;
+    padding: 5px;
+}
+
+#footer a,
+#footer a:hover {
+    color: #8D8D73;
+}
+
+.content {
+    clear: both;
+    padding: 20px 0;
+    margin: 10px auto;
+}
+
+.content .image {
+    text-align: center;
+    position: relative;
+}
+
+.content .image .author,
+.content .image .description, 
+.content .image .tags {
+    display: block;
+    clear: both;
+}
+
+.content .image .description {
+    font-style: italic;
+}
+
+.content img {
+    border: none;
+}
+
+.content .image .thumbnail {
+    border: none;
+    margin-bottom: 10px;
+}
+
+.content .image .thumbnail .delete,
+.content .image .thumbnail .edit {
+}
+
+.content .image .thumbnail .delete {
+    right: 24px;
+}
+
+.content .info {
+    width: 598px;
+    text-align: right;
+}
+
+.content .info th {
+    text-align: left;
+}
+
+.content .info th,
+.content .related h4 {
+    color: #C0DB5A;
+    text-transform: uppercase;
+}
+
+.content .info td {
+    vertical-align: top;
+}
+
+.content .info textarea {
+    width: 420px;
+    height: 45px;
+}
+
+.content .related {
+    width: 208px;
+    margin-left: 10px;
+    overflow: auto;
+}
+
+.content .related,
+.content .info {
+    height: 328px;
+    float: left;
+    margin-top: 30px;
+    padding: 10px;
+    color: #EEE;
+    border: 1px solid #222222;
+}
+
+.content .related h4 {
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 10px;
+}
+
+.content .related p {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.content h2 {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.content .clearfix {
+    clear: both;
+}
+
+.content .success,
+.content .error {
+    background: #A40000;
+    color: #EEE;
+    padding: 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+.content .success {
+    color: #EEE;
+    font-weight: bold;
+    background: #333;
+}
+
+#account,
+#edit,
+#delete,
+#stats,
+#help,
+#tagcloud,
+#search,
+#login,
+#register {
+    background: #222222;
+    border: 1px solid #2A2A2A;
+    margin-top: 20px;
+    padding: 20px;
+    width: 805px;
+}
+
+#tagcloud a,
+#search a,
+#login a,
+#register a {
+    color: #EEE;
+}
+
+#search .result {
+    float: left;
+    height: 160px;
+    padding-top: 10px;
+    text-align: center;
+    width: 160px;
+}
+
+#tagcloud {
+    text-align: center;
+}
+
+#tagcloud a {
+    text-decoration: none;
+}
+
+.content .image .actions {
+    background: #f9F9F9;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding-bottom: 10px;
+    display: block;
+    width: 32px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+.content .image .actions a {
+    padding-top: 10px;
+    display: block;
+}
+
+.content .preview {
+    padding-top: 20px;
+    float: right;
+}
+
+#account .edit,
+#account .changePassword {
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #3D3D33;
+}
+
+#account .changePassword {
+    margin-bottom: 20px;
+}
+

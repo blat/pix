@@ -27,20 +27,27 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
 
     $image = Image::getFromName($img);
 
-    $tags = ($_POST) ? $_POST['tags'] : implode(', ', $image->getTags());
-    $description = ($_POST) ? $_POST['description'] : $image->getDescription();
-    $private = ($_POST) ? $_POST['private'] : $image->isPrivate();
+    $user = User::get();
+    if (!$user || $image->getUser() != $user->getPseudo()) {
+        $error = 'Acc&egrave;s interdit !';
+        include_once INC . '_error.php';
 
-    if ($_POST) {
+    } else {
 
-        $success = $image->edit($tags, $description, $private);
-        if (!$success) {
-            $error = $image->error;
+        $tags = ($_POST) ? $_POST['tags'] : implode(', ', $image->getTags());
+        $description = ($_POST) ? $_POST['description'] : $image->getDescription();
+        $private = ($_POST) ? $_POST['private'] : $image->isPrivate();
+
+        if ($_POST) {
+
+            $success = $image->edit($tags, $description, $private);
+            if (!$success) {
+                $error = $image->error;
+            }
+
         }
 
-    }
-
-    ?>
+        ?>
 
         <h2>Modifier les informations d'une image</h2>
 
@@ -64,5 +71,5 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
             <input type="submit" value="Enregistrer" />
         </form>
 
-<?php } 
-
+    <?php }
+}

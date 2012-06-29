@@ -27,20 +27,27 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
 
     $image = Image::getFromName($img);
 
-    if ($_POST) {
+    $user = User::get();
+    if (!$user || $image->getUser() != $user->getPseudo()) {
+        $error = 'Acc&egrave;s interdit !';
+        include_once INC . '_error.php';
 
-        if ($_POST['cancel']) {
-            header('Location: ' . $config['url'] . '?img=' . $img);
+    } else {
 
-        } else {
-            $success = $image->delete();
-            if (!$success) {
-                $error = $image->error;
+        if ($_POST) {
+
+            if ($_POST['cancel']) {
+                header('Location: ' . $config['url'] . '?img=' . $img);
+
+            } else {
+                $success = $image->delete();
+                if (!$success) {
+                    $error = $image->error;
+                }
             }
         }
-    }
 
-    ?>
+        ?>
 
         <h2>Supprimer une image</h2>
 
@@ -60,7 +67,7 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
                 <input type="submit" name="cancel" value="Non" />
             </form>
 
-<?php   }
+    <?php   }
+    }
 }
-
 

@@ -48,7 +48,7 @@ if (isset($action)) {
     }
 
 } else {
-       if (isset($img)) {
+    if (isset($img)) {
         include_once INC . 'image.php';
     }
 }

@@ -32,7 +32,7 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
         <span class="thumbnail">
             <a href="<?= $original ?>" rel="milkbox"><img src="<?= $resized ?>"/></a>
         </span>
-        <? if ($image && $image->getUser() && $image->getUser() == $_SESSION['pseudo']) { ?>
+        <?php if ($image && ( in_array($_SESSION['pseudo'], $config['admins']) || ($image->getUser() && $image->getUser() == $_SESSION['pseudo']))) { ?>
             <span class="actions">
                 <a class="edit" href="?action=edit&img=<?= $img ?>"><img src="images/edit.png" /></a>
                 <a class="delete" href="?action=delete&img=<?= $img ?>"><img src="images/delete.png" /></a>

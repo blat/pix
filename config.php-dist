@@ -23,6 +23,7 @@ $config = array(
     'sql_user' => 'root',
     'sql_password' => '',
     'sql_database' => 'toile-pix',
+    'admins' => array();
 
     'file_size_max' => 5000, // ko
     'width' => 480,

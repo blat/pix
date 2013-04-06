@@ -28,7 +28,7 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
     $image = Image::getFromName($img);
 
     $user = User::get();
-    if (!$user || $image->getUser() != $user->getPseudo()) {
+    if (!$user || ($image->getUser() != $user->getPseudo() && !in_array($user->getPseudo(), $config['admins']))) {
         $error = 'Acc&egrave;s interdit !';
         include_once INC . '_error.php';
 

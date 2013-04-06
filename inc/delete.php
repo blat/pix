@@ -28,7 +28,7 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
     $image = Image::getFromName($img);
 
     $user = User::get();
-    if (!$user || $image->getUser() != $user->getPseudo()) {
+    if (!$user || ($image->getUser() != $user->getPseudo() && !in_array($user->getPseudo(), $config['admins']))) {
         $error = 'Acc&egrave;s interdit !';
         include_once INC . '_error.php';
 
@@ -58,7 +58,7 @@ if (isset($img) && file_exists(ORIGINAL . $img)) {
 
             <span class="preview">
                 <a href="?img=<?= $img ?>" rel="milkbox"><img src="<?= $thumb ?>"/></a>
-            </span> 
+            </span>
 
             <p>&Ecirc;tes vous sur de vouloir supprimer cette image ?</p>
 

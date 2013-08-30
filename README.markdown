@@ -11,22 +11,103 @@ This tools was originaly build for [Toile-Libre](http://www.toile-libre.org) wit
 Demo
 ------------------
 
-* [pix.toile-libre.org](http://pix.toile-libre.org)
+* [pix.saezlive.net](http://pix.saezlive.net)
 
 
 Setup
 ------------------
 
-*  Create a MySQL database and import `schema.sql`
+* Install composer:
 
-*  Edit `config.php` (in particular, informations related to MySQL connection):
+        curl -sS https://getcomposer.org/installer | php
 
-        'sql_host'     => 'localhost',
-        'sql_user'     => 'root',
-        'sql_password' => '',
-        'sql_database' => 'toile-pix',
+* Run composer to fetch dependencies:
 
-* Change permissions for `uploads` directory and `cron.last` file (HTTPd needs a write access):
+        php composer.phar install
 
-        chown -R you:httpd uploads/ cron.last
-        chmod -R 775 uploads/ cron.last
+* Create a MySQL database and import schema:
+
+        CREATE TABLE `image` (
+            `id` INT(11) AUTO_INCREMENT,
+            `type` VARCHAR(255),
+            `slug` INT(11),
+            `date` DATETIME,
+            `private` TINYINT(3) DEFAULT 0,
+            `size` INT(11),
+            `user_id` INT(11),
+            `popularity` INT(11) DEFAULT 0,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY (`slug`),
+            KEY (`user_id`)
+        );
+
+        CREATE TABLE `image_tag` (
+            `id` INT(11) AUTO_INCREMENT,
+            `tag_id` INT(11),
+            `image_id` INT(11),
+            PRIMARY KEY (`id`),
+            UNIQUE KEY (`image_id`,`tag_id`),
+            KEY (`tag_id`)
+        );
+
+        CREATE TABLE `tag` (
+            `id` INT(11) AUTO_INCREMENT,
+            `label` VARCHAR(255),
+            PRIMARY KEY (`id`),
+            UNIQUE KEY (`label`)
+        );
+
+        CREATE TABLE `user` (
+            `id` INT(11) AUTO_INCREMENT,
+            `username` VARCHAR(255),
+            `password` VARCHAR(255),
+            PRIMARY KEY (`id`),
+            UNIQUE KEY (`username`)
+        );
+
+*  Rename `config.ini-dist` in `config.ini`, then edit it (in particular, informations related to MySQL connection):
+
+        host = localhost
+        dbname = pix
+        user = root
+        password = 
+
+* Change permissions for `data` and `cache` directory (HTTPd needs a write access):
+
+        mkdir data/ cache/
+        chown -R you:httpd data/ cache/
+        chmod -R 775 data/ cache/
+
+
+* Edit HTTPd config to add rewrite rules. Here are the rules for Lighttpd:
+
+        $HTTP["host"] == "pix.mydomain." {
+            server.document-root = "/path/to/pix/"
+            url.rewrite-once = (
+                "^/image/(\d+)/(\w+)\.jpg$" => "/cache/$2/$1.jpg",
+                "^.+\..+$" => "/public/$0",
+                "^([^\?]*)(\?(.*))?$" => "/index.php?uri=$1&$3"
+            )
+            server.error-handler-404 = "/index.php"
+        }
+
+
+Upgrade
+------------------
+
+If you uwant to upgrade from an old version of Pix:
+
+* Edit `upgrade.php` to change `$DB_*` and `$DIR_DATA`
+
+* Run:
+
+        php upgrade.php
+
+* Add theses rules in Lighttpd config to conserve existing URLs:
+
+        url.redirect = (
+            "\?img=(\d+)\.(\w+)" => "/image/$1",
+            "upload/original/(\d+)\.(\w+)" => "/image/$1/original.jpg",
+            "upload/img/(\d+)\.(\w+)" => "/image/$1/medium.jpg",
+            "upload/thumb/(\d+)\.(\w+)" => "/image/$1/small.jpg",
+        )

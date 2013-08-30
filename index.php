@@ -1,56 +1,88 @@
-<?php 
+<?php
 
-/******************************************************************************/
-/*                                                                            */
-/* Pix : Hébergement d'images                                                 */
-/*                                                                            */
-/******************************************************************************/
-/*                                                                            */
-/* Auteur:                                                                    */
-/*     - Mickael BLATIERE (mickael@saezlive.net)                              */
-/*                                                                            */
-/* Contributeurs :                                                            */
-/*     - ZeR0^ (zero@toile-libre.org)                                         */
-/*     - NiZoX (nizox@alterinet.org)                                          */
-/*                                                                            */
-/* Licence : GPL                                                              */
-/*                                                                            */
-/******************************************************************************/
+//---------------------------------------------------------------------------
+// Load dependencies
+
+require_once 'vendor/autoload.php';
+require_once 'models/image.php';
+require_once 'models/tag.php';
+require_once 'models/user.php';
 
 
-session_start();
-ob_start();
+//---------------------------------------------------------------------------
+// Init application
 
-require_once 'config.php';
-require_once CLASSES . 'SQL.php';
+function configure() {
+    $config = parse_ini_file(__DIR__ . '/config.ini', true);
 
-$sql = new SQL();
+    // Init database
+    RedBean_Facade::setup('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['user'], $config['db']['password']);
+    unset($config['db']);
 
-require_once CLASSES . 'User.php';
-User::checkCookie();
+    // Freeze schema in production
+    if ($config['env'] == 'production') {
+        RedBean_Facade::freeze();
+    }
+    unset($config['env']);
 
-$img = $_GET["img"];
-$action = ($_GET['action']);
-
-if (!$img && !$action) {
-    $action = 'tagcloud';
-}
-$allowed_actions = array('upload', 'register', 'login', 'logout', 'account', 'search', 'help', 'stats', 'tagcloud', 'edit', 'delete', 'account', 'cron');
-
-include_once INC . '_header.php';
-
-if (isset($action)) {
-    if (in_array($action, $allowed_actions)) {
-        include_once INC . $action . '.php';
-    } else {
-        $error = "Cette page n'existe pas !";
-        include_once INC . '_error.php';
+    // Pass config
+    foreach ($config as $key => $value) {
+        option($key, $value);
     }
 
-} else {
-    if (isset($img)) {
-        include_once INC . 'image.php';
-    }
+    // Define layout
+    layout('layout.phtml');
+
+    // Enable sessions
+    option('session', true);
+
+    option('host', 'http://' . $_SERVER['HTTP_HOST']);
+    option('base_uri', '/');
+
+    option('data_dir', __DIR__ . '/data/');
+    option('cache_dir', __DIR__ . '/cache/');
 }
 
-include_once INC . '_footer.php';
+
+//---------------------------------------------------------------------------
+// Routes
+
+dispatch('/login', 'auth_login');
+dispatch_post('/login', 'auth_login_post');
+
+dispatch('/logout', 'auth_logout');
+
+dispatch('/register', 'auth_register');
+dispatch_post('/register', 'auth_register_post');
+
+dispatch('/upload', 'image_upload');
+dispatch_post('/upload', 'image_upload_post');
+
+dispatch('/image/:slug', 'image_view');
+dispatch('^/image/(\d+)/(\w+)\.jpg', 'image_download');
+
+dispatch('/edit/:slug', 'image_edit');
+dispatch_post('/edit/:slug', 'image_edit_post');
+
+dispatch('/delete/:slug', 'image_delete');
+
+dispatch('/', 'image_search_by_popularity');
+dispatch('/tag/:label', 'image_search_by_tag');
+dispatch('/user/:username', 'image_search_by_user');
+
+
+//---------------------------------------------------------------------------
+// Always load stats
+
+function before($route) {
+    $stats = RedBean_Facade::getRow('SELECT COUNT(*) AS image_count, SUM(size) AS image_size FROM image');
+    $stats['user_count'] = RedBean_Facade::getCell('SELECT COUNT(*) FROM user');
+    $stats['labels'] = RedBean_Facade::getCol('SELECT tag.label FROM tag JOIN image_tag ON tag.id = tag_id JOIN image ON image.id = image_id WHERE image.date > \'' . date('Y-m-d', strtotime('-1 month')) . '\' AND private <> 1 GROUP BY tag_id ORDER BY COUNT(image_id) DESC LIMIT 5');
+    set('stats', $stats);
+}
+
+
+//---------------------------------------------------------------------------
+// Let's go!
+
+run();

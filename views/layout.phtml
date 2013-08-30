@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Pix <?php if (!empty($title)): ?>| <?= $title ?><?php endif; ?></title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.12.0/build/cssreset/cssreset-min.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Grand+Hotel" />
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+        <link href="/favicon.png" rel="icon" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <div class="container">
+                    <h1 class="brand"><a href="/">Pix</a></h1>
+
+                    <ul class="navbar">
+                        <li><a class="btn" href="/upload"><i class="icon icon-cloud-upload"></i> Upload</a></li>
+                        <?php if (!empty($_SESSION['user'])): ?>
+                        <li><a href="/user/<?= $_SESSION['user']->username ?>">Mes images</a></li>
+                        <li><a href="/logout">Déconnexion</a></li>
+                        <?php else: ?>
+                        <li><a href="/login">Connexion</a></li>
+                        <li><a href="/register">Inscription</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="container">
+                    <?php foreach ($flash as $type => $message): ?>
+                        <div class="alert <?= $type ?>"><?= $message ?></div>
+                    <?php endforeach; ?>
+
+                    <?php if (!empty($title)): ?>
+                        <h2 class="title"><?= $title ?></h2>
+                    <?php endif; ?>
+
+                    <?= $content ?>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="container">
+                    <div class="left">
+                        <?php if ($stats['labels']): ?>
+                        <p>
+                            Sujets populaires :
+                            <?php foreach ($stats['labels'] as $label): ?>
+                                <a href="/tag/<?= $label ?>">#<?= $label ?></a>
+                            <?php endforeach; ?>
+                        </p>
+                        <?php endif; ?>
+                        <p>Statistiques : <?= $stats['image_count'] ?> images et <?= $stats['user_count'] ?> utilisateurs.</p>
+                    </div>
+                    <div class="right">
+                        <p>Powered by <a target="_blank" href="http://limonade-php.github.io/">Limonade</a>, <a target="_blank" href="http://redbeanphp.com/">RedBean</a> and <a target="_blank" href="http://phpimageworkshop.com/">PHP Image Workshop</a>.</p>
+                        <p>
+                            <a target="_blank" href="http://github.com/blat/pix">Fork me on GithHub</a>
+                            &mdash;
+                            <a target="_blank" href="http://github.com/blat/pix/issues">Signaler un bug</a>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.1.7/ZeroClipboard.min.js"></script>
+        <script type="text/javascript" src="/app.js"></script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', '<?= option('google_analytics') ?>']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </body>
+</html>

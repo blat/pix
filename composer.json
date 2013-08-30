@@ -1,0 +1,7 @@
+{
+    "require": {
+        "sofadesign/limonade": "dev-master",
+        "gabordemooij/redbean": "3.*",
+        "sybio/image-workshop": "2.*"
+    }
+}

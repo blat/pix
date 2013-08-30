@@ -1,0 +1,19 @@
+env = production
+date_format = 'd/m/Y'
+google_analytics = 
+
+admin[] = pseudo1
+admin[] = pseudo2
+
+[db]
+host = localhost
+dbname = pix
+user = root
+password = 
+
+[size]
+square = 140
+small = 150
+medium = 360
+large = 800
+original = 0

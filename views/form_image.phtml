@@ -1,0 +1,25 @@
+<form method="post" enctype="multipart/form-data">
+    <?php if (empty($image)): ?>
+    <p>
+        <label for="image">Image :</label>
+        <input id="image" type="file" name="image" />
+    </p>
+    <?php endif; ?>
+
+    <p>
+        <label for="tags">Tags :</label>
+        <input id="tags" type="text" name="tags" value="<?php if (!empty($image)): ?><?= htmlentities(implode(', ', $image->getLabels())) ?><?php endif; ?>" />
+        <span class="help">Séparés par des virgules.</span>
+    </p>
+
+    <p>
+        <label for="private" class="checkbox">
+            <input id="private" type="checkbox" name="private" <?php if (!empty($image) && $image->private): ?>checked="checked"<?php endif; ?> /> Cette image est privée
+        </label>
+    </p>
+
+    <p>
+        <input name="MAX_FILE_SIZE" value="2048000" type="hidden" />
+        <button type="submit">Valider</button>
+    </p>
+</form>

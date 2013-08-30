@@ -68,7 +68,7 @@ foreach ($images as $data) {
     copy($file, $image->getFile());
 
     $image->date = date('Y-m-d H:i:s', $image->slug);
-    $image->private = !(int)$data['public'];
+    $image->private = empty($data['public'])
     $image->size = $image->getFileSize();
 
     if (isset($users[$data['user']])) {

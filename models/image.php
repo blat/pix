@@ -11,7 +11,7 @@ class Model_Image extends RedBean_SimpleModel {
     }
 
     public function delete() {
-        unlink($image->getFile());
+        unlink($this->getFile());
     }
 
     public function setTags($labels) {

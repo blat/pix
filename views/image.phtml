@@ -40,12 +40,12 @@
     </p>
     <p>
         <label>Insérer la miniature dans un forum :</label>
-        <input id="forum_thumbnail" type="text" value="[url=<?= option('host') ?>/image/<?= $image->slug ?>][img]<?= option('base_uri') ?>/image/<?= $image->slug ?>/small.jpg[/img][/url]" disabled="disabled" />
+        <input id="forum_thumbnail" type="text" value="[url=<?= option('host') ?>/image/<?= $image->slug ?>][img]<?= option('host') ?>/image/<?= $image->slug ?>/small.jpg[/img][/url]" disabled="disabled" />
         <button rel="zero-clipboard" data-clipboard-target="forum_thumbnail"><i class="icon icon-copy"></i> Copier</button>
     </p>
     <p>
         <label>Insérer l'image dans un forum :</label>
-        <input id="forum_image" type="text" value="[url=<?= option('host') ?>/image/<?= $image->slug ?>][img]<?= option('base_uri') ?>/image/<?= $image->slug ?>/medium.jpg[/img][/url]" disabled="disabled" />
+        <input id="forum_image" type="text" value="[url=<?= option('host') ?>/image/<?= $image->slug ?>][img]<?= option('host') ?>/image/<?= $image->slug ?>/medium.jpg[/img][/url]" disabled="disabled" />
         <button rel="zero-clipboard" data-clipboard-target="forum_image"><i class="icon icon-copy"></i> Copier</button>
     </p>
 </div>

@@ -95,7 +95,7 @@ Setup
 Upgrade
 ------------------
 
-If you uwant to upgrade from an old version of Pix:
+If you want to upgrade from an old version of Pix:
 
 * Edit `upgrade.php` to change `$DB_*` and `$DIR_DATA`
 

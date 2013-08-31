@@ -8,6 +8,10 @@
         <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="/style.css" />
         <link href="/favicon.png" rel="icon" />
+        <?php if (!empty($image)): ?>
+        <meta name="twitter:card" content="photo" />
+        <meta name="twitter:image:src" content="<?= option('host') ?>/image/<?= $image->slug ?>/medium.jpg" />
+        <?php endif; ?>
     </head>
     <body>
         <div class="wrapper">

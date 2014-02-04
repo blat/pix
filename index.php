@@ -30,6 +30,8 @@ function configure() {
         option($key, $value);
     }
 
+    option('version', filemtime(__DIR__ . '/public/'));
+
     // Define layout
     layout('layout.phtml');
 

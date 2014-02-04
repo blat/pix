@@ -166,7 +166,7 @@ function image_delete($slug) {
 // Search
 
 function image_search_by_popularity() {
-    $images = RedBean_Facade::find('image', 'private <> 1 ORDER BY popularity/DATEDIFF(NOW(), date)*RAND() DESC LIMIT 30');
+    $images = RedBean_Facade::find('image', 'private <> 1 ORDER BY popularity/DATEDIFF(NOW(), date)*RAND() DESC LIMIT 20');
 
     set('images', $images);
     return render('images.phtml');

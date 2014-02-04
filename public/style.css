@@ -59,6 +59,11 @@ a:hover {
     width: 100px;
 }
 
+.brand img {
+    width: 36px;
+    vertical-align: middle;
+}
+
 .header .brand a {
     color: #fefefe;
 }

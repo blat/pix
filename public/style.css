@@ -3,6 +3,7 @@ body {
     font-size: 14px;
     background: #f0f1f4;
     color: #6d6d6d;
+    background: #f0f0f0;
 }
 
 a {
@@ -19,8 +20,8 @@ a:hover {
     margin: auto;
 }
 
-.content {
-    padding: 20px 0;
+.content .container {
+    padding: 20px;
     background: #fff;
 }
 
@@ -44,9 +45,8 @@ a:hover {
  */
 
 .header {
-    border-bottom: 1px solid #d8dde1;
     padding-bottom: 10px;
-    background: #f0f1f4;
+    background: #111;
     width: 100%;
 }
 
@@ -59,9 +59,8 @@ a:hover {
     width: 100px;
 }
 
-.brand a {
-    color: #121621;
-    text-decoration: none;
+.header .brand a {
+    color: #fefefe;
 }
 
 .navbar {
@@ -81,13 +80,19 @@ a:hover {
     font-size: 12px;
 }
 
+.header a {
+    color: #ccc;
+}
+
+.header a:hover {
+    color: white;
+}
 
 /****************************************************************************
  * Footer
  */
 
 .footer {
-    border-top: 1px solid #d8dde1;
     padding: 10px 0;
     font-size: 12px;
     color: #9da2a8;
@@ -117,7 +122,7 @@ a.btn {
     border: none;
     padding: 6px 10px;
     font-weight: bold;
-    background: #ff7600;
+    background: #970000;
     border-radius: 4px;
     color: #fff;
     font-size: 14px;
@@ -126,7 +131,7 @@ a.btn {
 button.hover,
 button:hover,
 a.btn:hover {
-    background: #121621;
+    background: #aa0000;
     cursor: pointer;
 }
 
@@ -136,12 +141,13 @@ a.btn:hover {
  */
 
 .images {
-    margin-left: -20px;
+    margin: -5px;
 }
 
 .images .image {
     float: left;
-    margin: 0 0 20px 20px;
+    margin: 10px;
+    border: 1px solid #e9ebef;
 }
 
 .image {
@@ -153,26 +159,20 @@ a.btn:hover {
     text-align: center;
 }
 
-.image, .codes {
-    border: 1px solid #e9ebef;
-    margin: -1px;
-    background: #f4f5f7;
-    border-radius: 0 0 4px 4px;
-}
-
 .meta, .codes {
     padding: 15px;
 }
 
 .meta {
     text-align: right;
+    border-bottom: 1px solid #e9ebef;
+    padding-bottom: 30px;
 }
 
 .codes {
     margin: 0;
     margin-top: 20px;
-    border-radius: 4px;
-
+    padding-bottom: 0;
 }
 
 .codes input {
@@ -201,7 +201,7 @@ a.btn:hover {
 }
 
 .actions .btn:hover {
-    background: #ff7600;
+    background: #aa0000;
 }
 
 

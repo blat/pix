@@ -1,0 +1,5 @@
+.gitignore
+cache
+config.ini
+data
+vendor

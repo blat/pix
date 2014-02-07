@@ -101,20 +101,11 @@ a:hover {
     padding: 10px 0;
     font-size: 12px;
     color: #9da2a8;
+    text-align: right;
 }
 
 .footer a {
     color: #9da2a8;
-}
-
-.footer .left,
-.footer .right {
-    float: left;
-    width: 400px;
-}
-
-.footer .right {
-    text-align: right;
 }
 
 
@@ -170,14 +161,16 @@ a.btn:hover {
 
 .meta {
     text-align: right;
-    border-bottom: 1px solid #e9ebef;
-    padding-bottom: 30px;
 }
 
 .codes {
     margin: 0;
+    padding-top: 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
     padding-bottom: 0;
+    border-top: 1px solid #e9ebef;
+    border-bottom: 1px solid #e9ebef;
 }
 
 .codes input {
@@ -207,6 +200,11 @@ a.btn:hover {
 
 .actions .btn:hover {
     background: #aa0000;
+}
+
+#tagcloud {
+    position: relative;
+    height: 500px;
 }
 
 

@@ -49,3 +49,13 @@
         <button rel="zero-clipboard" data-clipboard-target="forum_image"><i class="icon icon-copy"></i> Copier</button>
     </p>
 </div>
+
+<div class="images">
+    <?php foreach ($image->getRelatedImages() as $relatedImage): ?>
+    <div class="image">
+        <a href="/image/<?= $relatedImage->slug ?>">
+            <img src="/image/<?= $relatedImage->slug ?>/square.jpg" />
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>

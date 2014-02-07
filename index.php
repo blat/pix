@@ -68,20 +68,10 @@ dispatch_post('/edit/:slug', 'image_edit_post');
 
 dispatch('/delete/:slug', 'image_delete');
 
-dispatch('/', 'image_search_by_popularity');
+dispatch('/', 'tag_search_by_popularity');
+dispatch('/explore', 'image_search_by_popularity');
 dispatch('/tag/:label', 'image_search_by_tag');
 dispatch('/user/:username', 'image_search_by_user');
-
-
-//---------------------------------------------------------------------------
-// Always load stats
-
-function before($route) {
-    $stats = RedBean_Facade::getRow('SELECT COUNT(*) AS image_count, SUM(size) AS image_size FROM image');
-    $stats['user_count'] = RedBean_Facade::getCell('SELECT COUNT(*) FROM user');
-    $stats['labels'] = RedBean_Facade::getCol('SELECT tag.label FROM tag JOIN image_tag ON tag.id = tag_id JOIN image ON image.id = image_id WHERE private <> 1 GROUP BY tag_id ORDER BY COUNT(image_id) DESC LIMIT 5');
-    set('stats', $stats);
-}
 
 
 //---------------------------------------------------------------------------

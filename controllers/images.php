@@ -166,9 +166,13 @@ function image_delete($slug) {
 // Search
 
 function image_search_by_popularity() {
-    $images = RedBean_Facade::find('image', 'private <> 1 ORDER BY popularity/DATEDIFF(NOW(), date)*RAND() DESC LIMIT 20');
+    $images = RedBean_Facade::find('image', 'private <> 1 ORDER BY popularity/DATEDIFF(NOW(), date)*RAND() DESC LIMIT 50');
+
+    $stats = RedBean_Facade::getRow('SELECT COUNT(*) AS image_count, SUM(size) AS image_size FROM image');
+    $stats['user_count'] = RedBean_Facade::getCell('SELECT COUNT(*) FROM user');
 
     set('images', $images);
+    set('stats', $stats);
     return render('images.phtml');
 }
 

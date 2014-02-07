@@ -22,6 +22,7 @@
 
                     <ul class="navbar">
                         <li><a class="btn" href="/upload"><i class="icon icon-cloud-upload"></i> Upload</a></li>
+                        <li><a href="/explore">Explorer</a></li>
                         <?php if (!empty($_SESSION['user'])): ?>
                         <li><a href="/user/<?= $_SESSION['user']->username ?>">Mes images</a></li>
                         <li><a href="/logout">Déconnexion</a></li>
@@ -51,28 +52,13 @@
 
             <div class="footer">
                 <div class="container">
-                    <div class="left">
-                        <?php if ($stats['labels']): ?>
-                        <p>
-                            Sujets populaires :
-                            <?php foreach ($stats['labels'] as $label): ?>
-                                <a href="/tag/<?= $label ?>">#<?= $label ?></a>
-                            <?php endforeach; ?>
-                        </p>
-                        <?php endif; ?>
-                        <p>Statistiques : <?= $stats['image_count'] ?> images et <?= $stats['user_count'] ?> utilisateurs.</p>
-                    </div>
-                    <div class="right">
-                        <p>Powered by <a target="_blank" href="http://limonade-php.github.io/">Limonade</a>, <a target="_blank" href="http://redbeanphp.com/">RedBean</a> and <a target="_blank" href="http://phpimageworkshop.com/">PHP Image Workshop</a>.</p>
-                        <p>Icon made by <a target="_blank" href="http://www.flaticon.com/free-icon/image-quadrate_3949" title="Adam Whitcroft">Adam Whitcroft</a>.</p>
-                    </div>
-                    <div class="clearfix"></div>
+                    <p>Powered by <a target="_blank" href="http://limonade-php.github.io/">Limonade</a>, <a target="_blank" href="http://redbeanphp.com/">RedBean</a>, <a target="_blank" href="http://phpimageworkshop.com/">Image Workshop</a> and <a target="_blank" href="https://github.com/indyarmy/jQuery.awesomeCloud.plugin/">awesomeCloud</a>. Icon made by <a target="_blank" href="http://www.flaticon.com/free-icon/image-quadrate_3949" title="Adam Whitcroft">Adam Whitcroft</a>.</p>
                 </div>
             </div>
         </div>
-
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.1.7/ZeroClipboard.min.js"></script>
+        <script type="text/javascript" src="/jquery.awesomeCloud-0.2.min.js"></script>
         <script type="text/javascript" src="/app.js?v=<?= option('version') ?>"></script>
         <script type="text/javascript">
             var _gaq = _gaq || [];

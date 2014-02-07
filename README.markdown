@@ -11,7 +11,7 @@ This tools was originaly build for [Toile-Libre](http://www.toile-libre.org) wit
 Demo
 ------------------
 
-* [pix.saezlive.net](http://pix.saezlive.net)
+* [pix.blizzart.net](http://pix.blizzart.net)
 
 
 Setup
@@ -79,17 +79,31 @@ Setup
         chmod -R 775 data/ cache/
 
 
-* Edit HTTPd config to add rewrite rules. Here are the rules for Lighttpd:
+* Edit HTTPd config to add rewrite rules.
 
-        $HTTP["host"] == "pix.mydomain." {
-            server.document-root = "/path/to/pix/"
-            url.rewrite-once = (
-                "^/image/(\d+)/(\w+)\.jpg$" => "/cache/$2/$1.jpg",
-                "^.+\..+$" => "/public/$0",
-                "^([^\?]*)(\?(.*))?$" => "/index.php?uri=$1&$3"
-            )
-            server.error-handler-404 = "/index.php"
-        }
+  * Nginx:
+  
+                server {
+                        listen                  80;
+                        server_name             pix.mydomain.tld;
+                        root                    /path/to/pix/;
+                        index                   index.php;
+                        try_files               $uri $uri/ /index.php$is_args$args;
+                        rewrite                 ^/image/(\d+)/(\w+)\.jpg$ /cache/$2/$1.jpg break;
+                        rewrite                 ^/(.*\.(css|js|png))$ /public/$1 break;
+                }
+  
+  * Lighttpd:
+
+                $HTTP["host"] == "pix.mydomain.tld" {
+                    server.document-root = "/path/to/pix/"
+                    url.rewrite-once = (
+                        "^/image/(\d+)/(\w+)\.jpg$" => "/cache/$2/$1.jpg",
+                        "^.+\..+$" => "/public/$0",
+                        "^([^\?]*)(\?(.*))?$" => "/index.php?uri=$1&$3"
+                    )
+                    server.error-handler-404 = "/index.php"
+                }
 
 
 Upgrade
@@ -103,11 +117,23 @@ If you want to upgrade from an old version of Pix:
 
         php upgrade.php
 
-* Add theses rules in Lighttpd config to conserve existing URLs:
+* Add theses rules in HTTPd config to conserve existing URLs:
 
-        url.redirect = (
-            "\?img=(\d+)\.(\w+)" => "/image/$1",
-            "upload/original/(\d+)\.(\w+)" => "/image/$1/original.jpg",
-            "upload/img/(\d+)\.(\w+)" => "/image/$1/medium.jpg",
-            "upload/thumb/(\d+)\.(\w+)" => "/image/$1/small.jpg",
-        )
+  * Nginx:
+
+                if ($args ~ "^img=(\d+).(\w+)$") {
+                        set             $img $1;
+                        rewrite         ^/$ /image/$img permanent;
+                }
+                rewrite                 ^/upload/original/(\d+)\.(\w+)$ /image/$1/original.jpg permanent;
+                rewrite                 ^/upload/img/(\d+)\.(\w+)$ /image/$1/medium.jpg permanent;
+                rewrite                 ^/upload/thumb/(\d+)\.(\w+)$ /image/$1/small.jpg permanent;
+        
+  * Lighttpd:
+
+                url.redirect = (
+                    "\?img=(\d+)\.(\w+)" => "/image/$1",
+                    "upload/original/(\d+)\.(\w+)" => "/image/$1/original.jpg",
+                    "upload/img/(\d+)\.(\w+)" => "/image/$1/medium.jpg",
+                    "upload/thumb/(\d+)\.(\w+)" => "/image/$1/small.jpg",
+                )

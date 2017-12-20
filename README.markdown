@@ -5,29 +5,25 @@ Pix is an image hosting service.
 
 This tools was originaly build for [Toile-Libre](http://www.toile-libre.org) with the help of:
 * [ZeR0^](zero@toile-libre.org)
-* [NiZoX](nizox@alterinet.org) 
+* [NiZoX](nizox@alterinet.org)
 
 
 Demo
 ------------------
 
-* [pix.blizzart.net](http://pix.blizzart.net)
+* [pix.blizzart.net](https://pix.blizzart.net)
 
 
 Setup
 ------------------
 
-* Install composer:
-
-        curl -sS https://getcomposer.org/installer | php
-
 * Run composer to fetch dependencies:
 
-        php composer.phar install
+        composer install
 
 * Create a MySQL database and import schema:
 
-        CREATE TABLE `image` (
+        CREATE TABLE `images` (
             `id` INT(11) AUTO_INCREMENT,
             `type` VARCHAR(255),
             `slug` INT(11),
@@ -50,14 +46,14 @@ Setup
             KEY (`tag_id`)
         );
 
-        CREATE TABLE `tag` (
+        CREATE TABLE `tags` (
             `id` INT(11) AUTO_INCREMENT,
             `label` VARCHAR(255),
             PRIMARY KEY (`id`),
             UNIQUE KEY (`label`)
         );
 
-        CREATE TABLE `user` (
+        CREATE TABLE `users` (
             `id` INT(11) AUTO_INCREMENT,
             `username` VARCHAR(255),
             `password` VARCHAR(255),
@@ -67,73 +63,40 @@ Setup
 
 *  Rename `config.ini-dist` in `config.ini`, then edit it (in particular, informations related to MySQL connection):
 
+        driver = mysql
         host = localhost
-        dbname = pix
-        user = root
+        database = pix
+        username = root
         password = 
 
-* Change permissions for `data` and `cache` directory (HTTPd needs a write access):
+* Change permissions for `data` directory (HTTPd needs a write access):
 
-        mkdir data/ cache/
-        chown -R you:httpd data/ cache/
-        chmod -R 775 data/ cache/
+        mkdir data/
+        chown -R you:httpd data/
+        chmod -R 775 data/
 
+* Here is a workig Nginx config:
 
-* Edit HTTPd config to add rewrite rules.
-
-  * Nginx:
-  
-                server {
-                        listen                  80;
-                        server_name             pix.mydomain.tld;
-                        root                    /path/to/pix/;
-                        index                   index.php;
-                        try_files               $uri $uri/ /index.php$is_args$args;
-                        rewrite                 ^/image/(\d+)/(\w+)\.jpg$ /cache/$2/$1.jpg break;
-                        rewrite                 ^/(.*\.(css|js|png))$ /public/$1 break;
-                }
-  
-  * Lighttpd:
-
-                $HTTP["host"] == "pix.mydomain.tld" {
-                    server.document-root = "/path/to/pix/"
-                    url.rewrite-once = (
-                        "^/image/(\d+)/(\w+)\.jpg$" => "/cache/$2/$1.jpg",
-                        "^.+\..+$" => "/public/$0",
-                        "^([^\?]*)(\?(.*))?$" => "/index.php?uri=$1&$3"
-                    )
-                    server.error-handler-404 = "/index.php"
-                }
+        server {
+                listen                  80;
+                server_name             pix.mydomain.tld;
+                root                    /path/to/pix/public;
+                index                   index.php;
+                try_files               $uri $uri/ /index.php?$query_string;
+        }
 
 
 Upgrade
 ------------------
 
-If you want to upgrade from an old version of Pix:
+If you want to upgrade from v2.x of Pix:
 
-* Edit `upgrade.php` to change `$DB_*` and `$DIR_DATA`
+* Update PHP dependencies using composer:
 
-* Run:
+        composer install
 
-        php upgrade.php
+* Update MySQL schema:
 
-* Add theses rules in HTTPd config to conserve existing URLs:
-
-  * Nginx:
-
-                if ($args ~ "^img=(\d+).(\w+)$") {
-                        set             $img $1;
-                        rewrite         ^/$ /image/$img permanent;
-                }
-                rewrite                 ^/upload/original/(\d+)\.(\w+)$ /image/$1/original.jpg permanent;
-                rewrite                 ^/upload/img/(\d+)\.(\w+)$ /image/$1/medium.jpg permanent;
-                rewrite                 ^/upload/thumb/(\d+)\.(\w+)$ /image/$1/small.jpg permanent;
-        
-  * Lighttpd:
-
-                url.redirect = (
-                    "\?img=(\d+)\.(\w+)" => "/image/$1",
-                    "upload/original/(\d+)\.(\w+)" => "/image/$1/original.jpg",
-                    "upload/img/(\d+)\.(\w+)" => "/image/$1/medium.jpg",
-                    "upload/thumb/(\d+)\.(\w+)" => "/image/$1/small.jpg",
-                )
+        RENAME TABLE `image` TO `images`;
+        RENAME TABLE `tag` TO `tags`;
+        RENAME TABLE `user` TO `users`;

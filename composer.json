@@ -1,7 +1,13 @@
 {
     "require": {
-        "sofadesign/limonade": "dev-master",
-        "gabordemooij/redbean": "3.*",
-        "sybio/image-workshop": "2.*"
+        "blat/phencil": "dev-master",
+        "illuminate/database": "^5.5",
+        "intervention/image": "^2.4",
+        "intervention/imagecache": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
     }
 }

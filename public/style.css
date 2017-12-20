@@ -1,282 +1,55 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    background: #f0f1f4;
-    color: #6d6d6d;
     background: #f0f0f0;
 }
 
-a {
-    color: #6d6d6d;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #121621;
-}
-
 .container {
-    width: 800px;
-    margin: auto;
+    max-width: 1080px;
 }
 
-.content .container {
-    padding: 20px;
+.content {
     background: #fff;
 }
 
-.content p {
-    margin-bottom: 20px;
+.text-muted a {
+    color: #868e96;
 }
 
-.title {
-    color: #6d6d6d;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.clearfix {
-    clear: both;
-}
-
-
-/****************************************************************************
- * Header
- */
-
-.header {
-    padding-bottom: 10px;
+.navbar {
     background: #111;
-    width: 100%;
 }
 
-.brand {
-    font-family: 'Grand Hotel', cursive;
-    font-size: 42px;
-    display: inline-block;
-    font-weight: bold;
-    text-transform: lowercase;
-    width: 100px;
-}
-
-.brand img {
+.navbar-brand img {
     width: 36px;
     vertical-align: middle;
 }
 
-.header .brand a {
-    color: #fefefe;
-}
-
-.navbar {
-    display: inline-block;
-    text-align: right;
-    width: 696px;
-}
-
-.navbar li {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.navbar a {
-    padding: 6px 10px;
+.navbar-brand {
+    font-family: 'Grand Hotel', cursive;
+    text-transform: lowercase;
+    font-size: 42px;
     font-weight: bold;
-    font-size: 12px;
 }
 
-.header a {
-    color: #ccc;
+.btn-primary {
+    background-color: #970000;
+    border-color: #970000;
 }
 
-.header a:hover {
-    color: white;
-}
-
-/****************************************************************************
- * Footer
- */
-
-.footer {
-    padding: 10px 0;
-    font-size: 12px;
-    color: #9da2a8;
-    text-align: right;
-}
-
-.footer a {
-    color: #9da2a8;
-}
-
-
-/****************************************************************************
- * Buttons
- */
-
-button,
-a.btn {
-    border: none;
-    padding: 6px 10px;
-    font-weight: bold;
-    background: #970000;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 14px;
-}
-
-button.hover,
-button:hover,
-a.btn:hover {
+.btn-primary:hover {
     background: #aa0000;
-    cursor: pointer;
-}
-
-
-/****************************************************************************
- * Images
- */
-
-.images {
-    margin: -5px;
-}
-
-.images .image {
-    float: left;
-    margin: 10px;
-    border: 1px solid #e9ebef;
+    border-color: #aa0000;
 }
 
 .image {
     position: relative;
 }
 
-.image .large {
-    display: block;
-    text-align: center;
-}
-
-.meta, .codes {
-    padding: 15px;
-}
-
-.meta {
-    text-align: right;
-}
-
-.codes {
-    margin: 0;
-    padding-top: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 0;
-    border-top: 1px solid #e9ebef;
-    border-bottom: 1px solid #e9ebef;
-}
-
-.codes input {
-    width: 670px;
-}
-
-.codes input[type=text] {
-    margin-top: 5px;
-}
-
-.codes button {
-    width: 100px;
-    padding: 5px;
-    margin-left: -6px;
-    border-radius: 0 4px 4px 0;
-}
-
 .actions {
     position: absolute;
-    right: 10px;
-    top: 20px;
+    right: 0px;
+    top: 0px;
 }
 
-.actions .btn {
-    background: #121621;
-}
-
-.actions .btn:hover {
-    background: #aa0000;
-}
-
-#tagcloud {
-    position: relative;
-    height: 500px;
-}
-
-
-/****************************************************************************
- * Forms
- */
-
-label {
-    font-weight: bold;
-    display: block;
-}
-
-form label {
-    width: 160px;
-    text-align: right;
-    display: inline-block;
-}
-
-form input {
-    margin-left: 20px;
-}
-
-input[type=text],
-input[type=password] {
-    border: 1px solid #d8dde1;
-    padding: 4px;
-    border-radius: 4px;
-    background: #fff;
-}
-
-form input[type=text],
-form input[type=password] {
-    width: 360px;
-}
-
-form label.checkbox {
-    margin-left: 160px;
-    width: 100%;
-    text-align: left;
-    font-weight: normal;
-}
-
-form button {
-    margin-left: 180px;
-}
-
-form .help {
-    display: block;
-    margin-left: 180px;
-    padding: 5px;
-    font-size: 12px;
-}
-
-
-/****************************************************************************
- * Alerts
- */
-
-.alert {
-    padding: 10px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.error {
-    background: #fdf0d5;
-    border-left: 5px solid #fce4b3;
-    color: #f7b42c;
-}
-
-.success {
-    color: #90d5ec;
-    background: #e9f7fb;
-    border-left: 5px solid #d7f0f8;
+#tagcloud a {
+    display: none;
 }

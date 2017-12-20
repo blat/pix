@@ -1,5 +1,5 @@
 .gitignore
-cache
+composer.lock
 config.ini
 data
 vendor

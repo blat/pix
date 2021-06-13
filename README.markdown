@@ -61,13 +61,13 @@ Setup
             UNIQUE KEY (`username`)
         );
 
-*  Rename `config.ini-dist` in `config.ini`, then edit it (in particular, informations related to MySQL connection):
+*  Rename `.env.example` in `.env`, then edit it (in particular, informations related to MySQL connection):
 
-        driver = mysql
-        host = localhost
-        database = pix
-        username = root
-        password = 
+        DB_CONNECTION=mysql
+        DB_HOST=localhost
+        DB_DATABASE=pix
+        DB_USERNAME=root
+        DB_PASSWORD=
 
 * Change permissions for `data` directory (HTTPd needs a write access):
 

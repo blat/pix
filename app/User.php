@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Phencil\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    public $timestamps = false;
+
     /**
      * User has many images
      */
@@ -48,7 +50,11 @@ class User extends Model
      */
     public function isAdmin()
     {
-        return in_array($this->username, \Phencil\App::getOption('admin'));
+        $admins = array_map(function($admin) {
+            return trim($admin);
+        }, explode(',', env('PIX_ADMINS')));
+
+        return in_array($this->username, $admins);
     }
 
     /**

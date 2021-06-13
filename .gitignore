@@ -1,5 +1,6 @@
+.env
 .gitignore
 composer.lock
-config.ini
 data
+storage
 vendor

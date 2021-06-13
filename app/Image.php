@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Phencil\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+    public $timestamps = false;
+
     /**
      * Define image sizes
      */

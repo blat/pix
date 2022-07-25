@@ -128,6 +128,7 @@ class Image extends Model
      */
     public function setTags($labels)
     {
+        $this->tags()->detach();
         $labels = trim($labels);
         if (!empty($labels)) {
             foreach (explode(',', $labels) as $label) {

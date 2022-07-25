@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    new Clipboard('.btn-clipboard');
+    new ClipboardJS('.btn-clipboard');
 
     $(".delete").click(function(){
         if (!confirm("Êtes-vous sûr de vouloir supprimer cette image ?")){
@@ -64,7 +64,7 @@ tagcloud = function() {
             .text(function(word) {
                 return word.text;
             })
-            .on("click", function (word, i){
+            .on("click", function (e, word, i){
                 window.location.href = word.url;
             });
     }

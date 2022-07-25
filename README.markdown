@@ -63,7 +63,7 @@ Setup
 
 *  Rename `.env.example` in `.env`, then edit it (in particular, informations related to MySQL connection):
 
-        DB_CONNECTION=mysql
+        DB_DRIVER=mysql
         DB_HOST=localhost
         DB_DATABASE=pix
         DB_USERNAME=root

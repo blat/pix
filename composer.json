@@ -1,8 +1,14 @@
 {
     "require": {
-        "intervention/image": "^2.5",
+        "guzzlehttp/psr7": "^2.4",
+        "illuminate/database": "^8.83",
+        "intervention/image": "^2.7",
         "intervention/imagecache": "^2.5",
-        "laravel/lumen-framework": "^8.2"
+        "php-di/php-di": "^6.4",
+        "slim/flash": "^0.4.0",
+        "slim/php-view": "^3.2",
+        "slim/slim": "^4.10",
+        "vlucas/phpdotenv": "^5.4"
     },
     "autoload": {
         "psr-4": {

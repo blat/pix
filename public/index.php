@@ -13,28 +13,32 @@ use Illuminate\Database\Capsule\Manager as CapsuleManager;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-use Slim\Views\PhpRenderer;
 use Slim\Flash\Messages as FlashMessages;
+use Slim\Views\Plates;
+use Slim\Views\PlatesExtension;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->safeLoad();
 
 $container = new Container();
 AppFactory::setContainer($container);
-$app = AppFactory::create();
 
 $container->set('flash', function () {
     return new FlashMessages;
 });
 
-$container->set('renderer', function ($container) {
-    $renderer = new PhpRenderer(__DIR__ . '/../templates', [
+$container->set('view', function ($container) {
+    $plates = new Plates(__DIR__ . '/../templates');
+    $plates->addData([
         'user' => isset($_SESSION['user']) ? $_SESSION['user'] : false,
         'flash' => $container->get('flash'),
     ]);
-    $renderer->setLayout('layout.php');
-    return $renderer;
+    return $plates;
 });
+
+$app = AppFactory::create();
+
+$app->add(new PlatesExtension($app));
 
 $capsule = new CapsuleManager();
 $capsule->addConnection([
@@ -51,7 +55,7 @@ $capsule->bootEloquent();
 // Search
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    return $this->get('renderer')->render($response, 'tags.php', [
+    return $this->get('view')->render($response, 'tags', [
         'tags'   => App\Tag::getPopular(),
     ]);
 });
@@ -60,7 +64,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 // Sign-in
 
 $app->get('/login', function (Request $request, Response $response, $args) {
-    return $this->get('renderer')->render($response, 'form_auth.php');
+    return $this->get('view')->render($response, 'form_auth');
 });
 
 $app->post('/login', function (Request $request, Response $response, $args) {
@@ -94,7 +98,7 @@ $app->get('/logout', function (Request $request, Response $response, $args) {
 // Sign-up
 
 $app->get('/register', function (Request $request, Response $response, $args) {
-    return $this->get('renderer')->render($response, 'form_auth.php');
+    return $this->get('view')->render($response, 'form_auth');
 });
 
 $app->post('/register', function (Request $request, Response $response, $args) {
@@ -124,7 +128,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 // Upload
 
 $app->get('/upload', function (Request $request, Response $response, $args) {
-    return $this->get('renderer')->render($response, 'form_image.php');
+    return $this->get('view')->render($response, 'form_image');
 });
 
 $app->post('/upload', function (Request $request, Response $response, $args) {
@@ -154,7 +158,7 @@ $app->get('/image/{slug}', function (Request $request, Response $response, $args
     $image->popularity++;
     $image->save();
 
-    return $this->get('renderer')->render($response, 'image.php', [
+    return $this->get('view')->render($response, 'image', [
         'image' => $image,
     ]);
 });
@@ -179,7 +183,7 @@ $app->get('/edit/{slug}', function (Request $request, Response $response, $args)
     if (!$image) return $response->withStatus(404);
     if (empty($_SESSION['user']) || (!$_SESSION['user']->isOwner($image)) && !$_SESSION['user']->isAdmin()) return $response->withStatus(403);
 
-    return $this->get('renderer')->render($response, 'form_image.php', [
+    return $this->get('view')->render($response, 'form_image', [
         'image' => $image,
     ]);
 });
@@ -215,7 +219,7 @@ $app->get('/delete/{slug}', function (Request $request, Response $response, $arg
 // Search
 
 $app->get('/explore', function (Request $request, Response $response, $args) {
-    return $this->get('renderer')->render($response, 'images.php', [
+    return $this->get('view')->render($response, 'images', [
         'images' => App\Image::getPopular(),
         'stats'  => [
             'image_count' => App\Image::count(),
@@ -230,7 +234,7 @@ $app->get('/tag/{label}', function (Request $request, Response $response, $args)
     $tag = App\Tag::getByLabel($label);
     if (!$tag) return $response->withStatus(404);
 
-    return $this->get('renderer')->render($response, 'images.php', [
+    return $this->get('view')->render($response, 'images', [
         'images' => $tag->getPublicImages(),
         'title'  => 'Images taggées « ' . $label . ' »',
     ]);
@@ -241,7 +245,7 @@ $app->get('/user/{username}', function (Request $request, Response $response, $a
     $user = App\User::getByUsername($username);
     if (!$user) return $response->withStatus(404);
 
-    return $this->get('renderer')->render($response, 'images.php', [
+    return $this->get('view')->render($response, 'images', [
         'images' => !empty($_SESSION['user']) && $_SESSION['user']->id == $user->id ? $user->getAllImages() : $user->getPublicImages(),
         'title'  => 'Images envoyées par ' . $username,
     ]);

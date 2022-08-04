@@ -1,3 +1,5 @@
+<?php $this->layout('layout') ?>
+
 <form method="post" enctype="multipart/form-data">
     <?php if (empty($image)): ?>
     <div class="mb-3 row">
@@ -11,7 +13,7 @@
     <div class="mb-3 row">
         <label for="tags" class="col-sm-2 col-form-label">Tags :</label>
         <div class="col-sm-10">
-        <input id="tags" class="form-control" type="text" name="tags" value="<?php if (!empty($image)): ?><?= htmlspecialchars(implode(', ', $image->getLabels())) ?><?php endif ?>" />
+        <input id="tags" class="form-control" type="text" name="tags" value="<?php if (!empty($image)): ?><?= $this->e(implode(', ', $image->getLabels())) ?><?php endif ?>" />
             <small class="form-text text-muted">Séparés par des virgules.</small>
         </div>
     </div>

@@ -1,3 +1,5 @@
+<?php $this->layout('layout') ?>
+
 <form method="post">
     <div class="mb-3 row">
         <label for="name" class="col-sm-2 col-form-label">Pseudo :</label>

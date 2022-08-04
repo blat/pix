@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Pix | <?php if (empty($title)): ?>Hébergement d'images<?php else: ?><?= htmlspecialchars($title) ?><?php endif ?></title>
+        <title>Pix | <?php if (empty($title)): ?>Hébergement d'images<?php else: ?><?= $this->e($title) ?><?php endif ?></title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" integrity="sha512-XWTTruHZEYJsxV3W/lSXG1n3Q39YIWOstqvmFsdNEEQfHoZ6vm6E9GK2OrF6DSJSpIbRbi+Nn0WDPID9O7xB2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -29,7 +29,7 @@
                         <li class="nav-item"><a class="btn btn-primary" href="/upload"><i class="fa fa-cloud-upload"></i> Upload</a></li>
                         <li class="nav-item"><a class="nav-link" href="/explore">Explorer</a></li>
                         <?php if (!empty($user)): ?>
-                        <li class="nav-item"><a class="nav-link" href="/user/<?= htmlspecialchars($user->username) ?>">Mes images</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/user/<?= $this->e($user->username) ?>">Mes images</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
                         <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="/login">Connexion</a></li>
@@ -45,16 +45,16 @@
                     <?php foreach ($messages as $message): ?>
                     <div class="alert alert-<?= $level ?> alert-dismissible" role="alert">
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        <?= htmlspecialchars($message) ?>
+                        <?= $this->e($message) ?>
                     </div>
                     <?php endforeach ?>
                 <?php endforeach ?>
 
                 <?php if (!empty($title)): ?>
-                    <h2 class="title"><?= htmlspecialchars($title) ?></h2>
+                    <h2 class="title"><?= $this->e($title) ?></h2>
                 <?php endif ?>
 
-                <?= $content ?>
+                <?= $this->section('content') ?>
             </div>
 
             <div class="footer text-end pt-2 pb-2">

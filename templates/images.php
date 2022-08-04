@@ -1,4 +1,6 @@
-<?= $this->fetch('shared/images.php', ['images' => $images]) ?>
+<?php $this->layout('layout') ?>
+
+<?= $this->insert('shared/images', ['images' => $images]) ?>
 
 <?php if (isset($stats)): ?>
 <div class="meta text-muted text-end">

@@ -58,14 +58,14 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $this->get('view')->render($response, 'tags', [
         'tags'   => App\Tag::getPopular(),
     ]);
-});
+})->setName('home');
 
 //---------------------------------------------------------------------------
 // Sign-in
 
 $app->get('/login', function (Request $request, Response $response, $args) {
     return $this->get('view')->render($response, 'form_auth');
-});
+})->setName('login');
 
 $app->post('/login', function (Request $request, Response $response, $args) {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
@@ -92,14 +92,14 @@ $app->get('/logout', function (Request $request, Response $response, $args) {
 
     $this->get('flash')->addMessage('success', "Vous êtes maintenant déconnecté !");
     return $response->withStatus(302)->withHeader('Location', '/');
-});
+})->setName('logout');
 
 //---------------------------------------------------------------------------
 // Sign-up
 
 $app->get('/register', function (Request $request, Response $response, $args) {
     return $this->get('view')->render($response, 'form_auth');
-});
+})->setName('register');
 
 $app->post('/register', function (Request $request, Response $response, $args) {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
@@ -129,7 +129,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 
 $app->get('/upload', function (Request $request, Response $response, $args) {
     return $this->get('view')->render($response, 'form_image');
-});
+})->setName('upload');
 
 $app->post('/upload', function (Request $request, Response $response, $args) {
     try {
@@ -161,7 +161,7 @@ $app->get('/image/{slug}', function (Request $request, Response $response, $args
     return $this->get('view')->render($response, 'image', [
         'image' => $image,
     ]);
-});
+})->setName('image');
 
 $app->get('/image/{slug}/{size}.jpg', function (Request $request, Response $response, $args) {
     $image = App\Image::getBySlug($args['slug']);
@@ -173,7 +173,7 @@ $app->get('/image/{slug}/{size}.jpg', function (Request $request, Response $resp
         ->withHeader('Cache-Control', 'public,max-age=31536000,immutable')
         ->withHeader('Expires', gmdate("D, d M Y H:i:s", strtotime('+1 day')) . " GMT")
         ->withHeader('Pragma', 'cache');
-});
+})->setName('fullImage');
 
 //---------------------------------------------------------------------------
 // Edit
@@ -186,7 +186,7 @@ $app->get('/edit/{slug}', function (Request $request, Response $response, $args)
     return $this->get('view')->render($response, 'form_image', [
         'image' => $image,
     ]);
-});
+})->setName('edit');
 
 $app->post('/edit/{slug}', function (Request $request, Response $response, $args) {
     $image = App\Image::getBySlug($args['slug']);
@@ -213,7 +213,7 @@ $app->get('/delete/{slug}', function (Request $request, Response $response, $arg
 
     $this->get('flash')->addMessage('success', "L'image a été supprimée !");
     return $response->withStatus(302)->withHeader('Location', '/');
-});
+})->setName('delete');
 
 //---------------------------------------------------------------------------
 // Search
@@ -227,7 +227,7 @@ $app->get('/explore', function (Request $request, Response $response, $args) {
             'user_count'  => App\User::count(),
         ],
     ]);
-});
+})->setName('explore');
 
 $app->get('/tag/{label}', function (Request $request, Response $response, $args) {
     $label = $args['label'];
@@ -238,7 +238,7 @@ $app->get('/tag/{label}', function (Request $request, Response $response, $args)
         'images' => $tag->getPublicImages(),
         'title'  => 'Images taggées « ' . $label . ' »',
     ]);
-});
+})->setName('tag');
 
 $app->get('/user/{username}', function (Request $request, Response $response, $args) {
     $username = $args['username'];
@@ -249,7 +249,7 @@ $app->get('/user/{username}', function (Request $request, Response $response, $a
         'images' => !empty($_SESSION['user']) && $_SESSION['user']->id == $user->id ? $user->getAllImages() : $user->getPublicImages(),
         'title'  => 'Images envoyées par ' . $username,
     ]);
-});
+})->setName('user');
 
 
 //---------------------------------------------------------------------------

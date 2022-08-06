@@ -2,7 +2,7 @@
 
 <div id="tagcloud">
     <?php foreach ($tags as $tag): ?>
-        <a data-weight="<?= $tag->getPopularity() ?>" href="/tag/<?= $this->e($tag->label) ?>">
+        <a data-weight="<?= $tag->getPopularity() ?>" href="<?= $this->urlFor('tag', ['label' => $tag->label]) ?>">
             <?= $this->e($tag->label) ?>
         </a>
     <?php endforeach ?>

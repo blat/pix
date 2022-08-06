@@ -8,32 +8,32 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="/style.css" />
-        <link href="/favicon.png" rel="icon" />
+        <link rel="stylesheet" type="text/css" href="<?= $this->basePath() ?>/style.css" />
+        <link href="<?= $this->basePath() ?>/favicon.png" rel="icon" />
         <?php if (!empty($image)): ?>
         <meta name="twitter:card" content="photo" />
-        <meta name="twitter:image:src" content="<?= $image->getUrl('medium') ?>" />
+        <meta name="twitter:image:src" content="<?= $this->fullUrlFor('fullImage', ['slug' => $image->slug, 'size' => 'medium'] ) ?>" />
         <?php endif ?>
         <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="/"><img src="/logo.png" /> Pix</a>
+                <a class="navbar-brand" href="<?= $this->urlFor('home') ?>"><img src="<?= $this->basePath() ?>/logo.png" /> Pix</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="btn btn-primary" href="/upload"><i class="fa fa-cloud-upload"></i> Upload</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/explore">Explorer</a></li>
+                        <li class="nav-item"><a class="btn btn-primary" href="<?= $this->urlFor('upload') ?>"><i class="fa fa-cloud-upload"></i> Upload</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= $this->urlFor('explore') ?>">Explorer</a></li>
                         <?php if (!empty($user)): ?>
-                        <li class="nav-item"><a class="nav-link" href="/user/<?= $this->e($user->username) ?>">Mes images</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= $this->urlFor('user', ['username' => $user->username]) ?>">Mes images</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= $this->urlFor('logout') ?>>Déconnexion</a></li>
                         <?php else: ?>
-                        <li class="nav-item"><a class="nav-link" href="/login">Connexion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register">Inscription</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= $this->urlFor('login') ?>">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= $this->urlFor('register') ?>">Inscription</a></li>
                         <?php endif ?>
                     </ul>
                 </div>

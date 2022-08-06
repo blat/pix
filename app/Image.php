@@ -39,20 +39,6 @@ class Image extends Model
     }
 
     /**
-     * Get image URL
-     *
-     * @return string
-     */
-    public function getUrl($size = null)
-    {
-        $url = (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off' ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . "/image/{$this->slug}";
-        if ($size) {
-            $url .= "/{$size}.jpg";
-        }
-        return $url;
-    }
-
-    /**
      * Get tag's labels
      *
      * @return array
